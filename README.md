@@ -253,23 +253,31 @@ print(df["CultureResult"].unique())
 
 <details>
 
-<summary>🔍 Finding Unique Values — What this does</summary>
+<summary>🔍 Unique Values Check — Data Consistency</summary>
 
 ## 📘 What this does
 
-`.unique()` shows every single unique value present in a column without repeating duplicates.
+- `df["Sex"].unique()` → shows all distinct values in the `Sex` column (e.g., Male, Female, etc.)  
+- `df["CultureResult"].unique()` → shows all distinct values in the `CultureResult` column (e.g., Positive, Negative, etc.)  
 
-It is very useful for checking data quality and spotting inconsistencies.
+This helps you detect inconsistencies like:
 
-For example, it can reveal if a dataset contains both `"Positive"` and `"positive"` as separate categories.
+- `"Male"` vs `"male"`  
+- `"Positive"` vs `"positive"`  
 
 ---
 
 ## ❌ Common mistakes beginners make
 
-- Skipping this step and later discovering duplicated categories in plots caused by simple typos or inconsistent labeling.  
+- Skipping this check and later getting duplicate categories in plots  
+- Assuming data is clean without verifying spelling and formatting  
+- Not noticing case differences (upper vs lower case)  
 
 ---
+
+## 💡 Tip
+
+Always run `.unique()` before visualization to ensure your categories are clean and consistent.
 
 </details>
 
