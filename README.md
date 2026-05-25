@@ -521,36 +521,96 @@ df["Sex"] = df["Sex"].str.lower()
 
 # 📊 5. REGION DISTRIBUTION
 
+## 📊 5.1. Basic Count Plot with Label Rotation
 ```python
-df["region"].value_counts().plot.bar()
+import matplotlib.pyplot as plt
+import seaborn as sns
 
-plt.title("TB Cases by Region")
+# 1. Create the vertical bar chart
+sns.countplot(data=df, x="region", palette="pastel")
+
+# 2. Rotate the region names so they don't overlap!
+plt.xticks(rotation=45)
+
+# 3. Add titles
+plt.title("Number of TB Cases by Region")
+plt.xlabel("Region of Origin")
+plt.ylabel("Patient Count")
 
 plt.show()
 ```
 
 <details>
-<summary>📘 Explanation + Common Mistakes</summary>
 
-## What this does
+<summary>📊 Region Bar Chart — What this does</summary>
 
-- Shows number of TB cases per region  
+## 📘 What this does
+
+- `sns.countplot(data=df, x="region", palette="pastel")` → creates a bar chart that counts how many patients come from each region  
+- `plt.xticks(rotation=45)` → rotates region labels so they don’t overlap and become unreadable  
+- `plt.title()` → adds a clear title to the chart  
+- `plt.xlabel()` → labels the X-axis (region names)  
+- `plt.ylabel()` → labels the Y-axis (number of patients)  
+- `plt.show()` → displays the final plot  
 
 ---
 
 ## ❌ Common mistakes beginners make
 
-- Spelling inconsistencies in region names  
-- Too many categories cluttering plot  
+- Misspelled column name (`region` vs `Region`)  
+- Overlapping x-axis labels (forgetting `rotation=45`)  
+- Using palette without understanding color grouping  
+- Forgetting `plt.show()` so the plot does not display  
 
 ---
 
 ## 💡 Tip
 
-Clean spelling before plotting.
+Use `countplot()` when you want to quickly compare category counts across groups.
 
 </details>
+## 5.2. Sorting the Bars from Highest to Lowest
+```python
+# 1. Find the order of regions from most frequent to least frequent
+highest_to_lowest = df["region"].value_counts().index
 
+# 2. Tell Seaborn to plot the bars in that exact order
+sns.countplot(data=df, x="region", order=highest_to_lowest, palette="muted")
+
+plt.xticks(rotation=45)
+plt.title("Ordered TB Cases by Region")
+
+plt.show()
+```
+<details>
+
+<summary>📊 Ordered Region Bar Chart — What this does</summary>
+
+## 📘 What this does
+
+- `df["region"].value_counts().index` → finds regions sorted from most common to least common  
+- `order=highest_to_lowest` → forces Seaborn to display bars in that sorted order  
+- `sns.countplot(...)` → creates a bar chart showing number of TB cases per region  
+- `plt.xticks(rotation=45)` → rotates region names so they don’t overlap  
+- `plt.title()` → adds a clear title to the plot  
+- `plt.show()` → displays the final graph  
+
+---
+
+## ❌ Common mistakes beginners make
+
+- Forgetting to define `order` so bars appear in random order  
+- Misunderstanding `.value_counts().index`  
+- Misspelled column name (`region` vs `Region`)  
+- Overlapping x-axis labels without rotation  
+
+---
+
+## 💡 Tip
+
+Always sort categorical data when order matters — it makes patterns much easier to see.
+
+</details>
 ---
 
 # 🥧 6. CULTURE RESULT (PIE CHART)
