@@ -25,3 +25,24 @@ import seaborn as sns
 
 from Bio import Phylo
 from sklearn.metrics import pairwise_distances
+```
+
+<details> <summary>📘 Explanation + Common Mistakes</summary>
+What this does
+
+Loads all tools needed for:
+
+data handling (pandas)
+visualization (matplotlib, seaborn)
+SNP analysis (scikit-learn)
+phylogenetic trees (Biopython)
+❌ Common mistakes beginners make
+Forgetting to run the import cell first
+Typing wrong package names (panda instead of pandas)
+Missing Biopython installation in notebook kernel
+Running notebook cells out of order
+💡 Tip
+
+Always run this cell before anything else.
+
+</details>
