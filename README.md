@@ -656,7 +656,7 @@ Horizontal bar charts are very useful when category names are long or many.
 
 </details>
 
-##📈 5.4.  The Simplified "Pandas-Only" Way Sorted Pandas Bar Chart Shortcut
+## 📈 5.4.  The Simplified "Pandas-Only" Way Sorted Pandas Bar Chart Shortcut
 ```python
 # 1. Count the regions (Pandas automatically sorts them highest to lowest!)
 region_counts = df["region"].value_counts()
@@ -766,45 +766,188 @@ Adding percentages makes bar charts more informative and publication-ready, espe
 ---
 
 # 🥧 6. CULTURE RESULT (PIE CHART)
+## Option A: The Enhanced Pie Chart (Custom Colors & Edge Borders)
+This option upgrades the standard pie chart by adding custom colors and distinct borders between slices, which makes it much easier to read.
 
 ```python
-df["CultureResult"].value_counts().plot.pie(
-    autopct="%1.1f%%"
+import matplotlib.pyplot as plt
+
+# 1. Count the values
+culture_counts = df["CultureResult"].value_counts()
+
+# 2. Draw the pie chart (Fixed by placing edgecolor inside wedgeprops)
+culture_counts.plot(
+    kind="pie", 
+    autopct="%1.1f%%", 
+    colors=["tomato", "lightskyblue"], 
+    wedgeprops=dict(edgecolor="white", linewidth=2), # Fixed here!
+    startangle=140
 )
 
-plt.title("TB Culture Results")
-
+# 3. Add title and clear out the default vertical label
+plt.title("TB Culture Results Breakdown", pad=20)
 plt.ylabel("")
 
 plt.show()
 ```
 <details>
-<summary>📘 Explanation + Common Mistakes</summary>
 
-## What this does
+<summary>🥧 Pie Chart — What this does</summary>
 
-- Shows proportion of positive vs negative TB cases  
+## 📘 What this does
+
+- `df["CultureResult"].value_counts()` → counts how many positive and negative TB results exist and sorts them automatically  
+- `culture_counts.plot(kind="pie")` → creates a pie chart from the counted values  
+- `autopct="%1.1f%%"` → shows percentage values on each slice  
+- `colors=["tomato", "lightskyblue"]` → sets custom colors for the slices  
+- `wedgeprops=dict(edgecolor="white", linewidth=2)` → adds white borders between slices for clarity  
+- `startangle=140` → rotates the pie chart for better visual orientation  
+- `plt.title()` → adds a title to the chart  
+- `plt.ylabel("")` → removes the default y-axis label (which is unnecessary in pie charts)  
+- `plt.show()` → displays the final plot  
 
 ---
 
 ## ❌ Common mistakes beginners make
 
-- Missing `.value_counts()`  
-- Too many categories in pie chart  
-- Inconsistent labels (Positive vs positive)  
+- Forgetting that `value_counts()` automatically sorts values  
+- Not setting `autopct`, making percentages invisible  
+- Overcrowding pie charts with too many categories  
+- Forgetting to remove the default y-label (`plt.ylabel("")`)  
+- Using unclear or similar colors for slices  
 
 ---
 
 ## 💡 Tip
 
-Normalize text first:
+Pie charts work best when you have **only a few categories (2–5 max)** and want to show proportions clearly.
 
-```python
-df["CultureResult"] = df["CultureResult"].str.lower()
-```
 </details>
+
+## 🍩 Option B: The Modern Donut Chart (Highly Recommended)
+A donut chart is simply a pie chart with a hollow center. It looks highly modern and professional, and it is incredibly easy to create in a single line using wedgeprops.
+```python
+import matplotlib.pyplot as plt
+
+# 1. Count the values
+culture_counts = df["CultureResult"].value_counts()
+
+# 2. Use 'wedgeprops' to hollow out the center and turn it into a donut
+culture_counts.plot(
+    kind="pie", 
+    autopct="%1.1f%%", 
+    colors=["mediumseagreen", "gold"],
+    wedgeprops=dict(width=0.4, edgecolor="white", linewidth=2),
+    startangle=90
+)
+
+plt.title("TB Culture Results (Donut View)")
+plt.ylabel("")
+
+plt.show()
+```
+<details>
+
+<summary>🍩 Donut Chart — What this does</summary>
+
+## 📘 What this does
+
+- `df["CultureResult"].value_counts()` → counts how many TB positive and negative results exist in the dataset  
+- `culture_counts.plot(kind="pie")` → creates a pie chart from the counts  
+- `autopct="%1.1f%%"` → displays percentage values on each slice  
+- `colors=["mediumseagreen", "gold"]` → assigns custom colors to each category  
+- `wedgeprops=dict(width=0.4, edgecolor="white", linewidth=2)` → transforms the pie chart into a donut chart by creating a hole in the center  
+- `startangle=90` → rotates the chart for better visual alignment  
+- `plt.title()` → adds a title to the chart  
+- `plt.ylabel("")` → removes the default y-axis label  
+- `plt.show()` → displays the final plot  
+
 ---
 
+## ❌ Common mistakes beginners make
+
+- Forgetting that `width` in `wedgeprops` controls donut hole size  
+- Using too many categories (donut charts become unclear)  
+- Not setting `startangle`, making slices look misaligned  
+- Forgetting to remove y-label (`plt.ylabel("")`)  
+- Using poor color contrast, making slices hard to distinguish  
+
+---
+
+## 💡 Tip
+
+Donut charts are a cleaner version of pie charts and are better for presentations when you want a modern visual style.
+
+</details>
+
+
+## 🗂️ Option C: Pie Chart with a Side Legend (Best for Long Text Labels)
+When category names are long, printing them directly on top of the pie slices makes a huge mess. This approach hides the text labels on the slices and places them into a clean side legend box instead.
+
+```python
+import matplotlib.pyplot as plt
+
+# 1. Count the values
+culture_counts = df["CultureResult"].value_counts()
+
+# 2. Draw the pie chart but turn labels OFF on the slices
+culture_counts.plot(
+    kind="pie", 
+    labels=None, 
+    autopct="%1.1f%%", 
+    colors=["coral", "silver"],
+    startangle=90
+)
+
+# 3. Add a separate, clean legend box on the side
+plt.legend(
+    labels=culture_counts.index, 
+    loc="center left", 
+    bbox_to_anchor=(1, 0.5)
+)
+
+plt.title("TB Culture Results Summary")
+plt.ylabel("")
+
+plt.show()
+```
+<details>
+
+<summary>📊 Pie Chart with Legend — What this does</summary>
+
+## 📘 What this does
+
+- `df["CultureResult"].value_counts()` → counts how many TB positive and negative results exist in the dataset  
+- `culture_counts.plot(kind="pie")` → creates a pie chart from the counts  
+- `labels=None` → removes text labels directly from the pie slices for a cleaner look  
+- `autopct="%1.1f%%"` → shows percentage values on each slice  
+- `colors=["coral", "silver"]` → assigns custom colors to the slices  
+- `startangle=90` → rotates the chart for better visual alignment  
+- `plt.legend(...)` → adds a separate legend box showing category names  
+  - `labels=culture_counts.index` → uses category names for the legend  
+  - `loc="center left"` → positions legend on the left side  
+  - `bbox_to_anchor=(1, 0.5)` → moves legend outside the chart area  
+- `plt.title()` → adds a title to the chart  
+- `plt.ylabel("")` → removes the default y-axis label  
+- `plt.show()` → displays the final plot  
+
+---
+
+## ❌ Common mistakes beginners make
+
+- Forgetting to set `labels=None` and getting cluttered slices  
+- Misplacing legend outside the figure (bad `bbox_to_anchor` values)  
+- Using mismatched number of colors vs categories  
+- Forgetting `plt.ylabel("")` leading to unnecessary labels  
+- Overcrowding pie charts with many categories  
+
+---
+
+## 💡 Tip
+
+Using a legend instead of slice labels makes pie charts **much cleaner and publication-ready**, especially when category names are long.
+
+</details>
 ---
 
 # 🌍 7. REGION vs CULTURE RESULT (HEATMAP)
