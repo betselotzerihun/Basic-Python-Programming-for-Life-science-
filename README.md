@@ -34,19 +34,19 @@ from sklearn.metrics import pairwise_distances
 
 Loads all tools needed for:
 
-- data handling (`pandas`)
-- visualization (`matplotlib`, `seaborn`)
-- SNP analysis (`scikit-learn`)
-- phylogenetic trees (`Biopython`)
+- data handling (`pandas`)  
+- visualization (`matplotlib`, `seaborn`)  
+- SNP analysis (`scikit-learn`)  
+- phylogenetic trees (`Biopython`)  
 
 ---
 
 ## ❌ Common mistakes beginners make
 
-- Forgetting to run the import cell first
-- Typing wrong package names (`panda` instead of `pandas`)
-- Missing Biopython installation in notebook kernel
-- Running notebook cells out of order
+- Forgetting to run the import cell first  
+- Typing wrong package names (`panda` instead of `pandas`)  
+- Missing Biopython installation in notebook kernel  
+- Running notebook cells out of order  
 
 ---
 
@@ -71,17 +71,27 @@ df = pd.read_csv("metadata.csv")
 df.head()
 ```
 
-<details> <summary>📘 Explanation + Common Mistakes</summary>
-What this does
-Loads your TB clinical metadata dataset
-Displays first rows
-❌ Common mistakes beginners make
-File not in notebook folder
-Wrong separator (CSV vs Excel confusion)
-Encoding issues in real datasets
-💡 Tip
+<details>
+<summary>📘 Explanation + Common Mistakes</summary>
 
-Always start with df.head() to confirm data loaded correctly.
+## What this does
+
+- Loads your TB clinical metadata dataset  
+- Displays first rows  
+
+---
+
+## ❌ Common mistakes beginners make
+
+- File not in notebook folder  
+- Wrong separator (CSV vs Excel confusion)  
+- Encoding issues in real datasets  
+
+---
+
+## 💡 Tip
+
+Always start with `df.head()` to confirm data loaded correctly.
 
 </details>
 
@@ -94,14 +104,24 @@ df.shape
 df.columns
 ```
 
-<details> <summary>📘 Explanation + Common Mistakes</summary>
-What this does
-Shows number of patients (rows)
-Shows number of features (columns)
-❌ Common mistakes beginners make
-Ignoring column names before plotting
-Assuming column names are standardized
-💡 Tip
+<details>
+<summary>📘 Explanation + Common Mistakes</summary>
+
+## What this does
+
+- Shows number of patients (rows)  
+- Shows number of features (columns)  
+
+---
+
+## ❌ Common mistakes beginners make
+
+- Ignoring column names before plotting  
+- Assuming column names are standardized  
+
+---
+
+## 💡 Tip
 
 Always inspect columns first in real clinical datasets.
 
@@ -120,22 +140,31 @@ plt.title("Age Distribution of TB Patients")
 plt.show()
 ```
 
-<details> <summary>📘 Explanation + Common Mistakes</summary>
-What this does
-Shows distribution of patient ages
-Helps understand affected population
-❌ Common mistakes beginners make
-Age column stored as string instead of numeric
-Missing values in Age column
-Too many bins making plot noisy
-💡 Tip
+<details>
+<summary>📘 Explanation + Common Mistakes</summary>
+
+## What this does
+
+- Shows distribution of patient ages  
+- Helps understand affected population  
+
+---
+
+## ❌ Common mistakes beginners make
+
+- Age column stored as string instead of numeric  
+- Missing values in Age column  
+- Too many bins making plot noisy  
+
+---
+
+## 💡 Tip
 
 Convert if needed:
 
+```python
 df["Age"] = pd.to_numeric(df["Age"], errors="coerce")
-
-</details>
-
+</details> ```
 ---
 
 # 📊 4. SEX DISTRIBUTION (BAR CHART)
@@ -148,19 +177,30 @@ plt.title("Gender Distribution")
 plt.show()
 ```
 
-<details> <summary>📘 Explanation + Common Mistakes</summary>
-What this does
-Counts male vs female patients
-Shows simple distribution
-❌ Common mistakes beginners make
-Column written as sex vs Sex
-Missing values or inconsistent labels (M, Male, male)
-💡 Tip
+<details>
+<summary>📘 Explanation + Common Mistakes</summary>
+
+## What this does
+
+- Counts male vs female patients  
+- Shows simple distribution  
+
+---
+
+## ❌ Common mistakes beginners make
+
+- Column written as `sex` vs `Sex`  
+- Missing values or inconsistent labels (M, Male, male)  
+
+---
+
+## 💡 Tip
 
 Standardize values first:
-df["Sex"] = df["Sex"].str.lower()
 
-</details>
+```python
+df["Sex"] = df["Sex"].str.lower()
+</details> ```
 
 
 ---
