@@ -539,6 +539,7 @@ plt.ylabel("Patient Count")
 
 plt.show()
 ```
+```
 
 <details>
 
@@ -611,6 +612,158 @@ plt.show()
 Always sort categorical data when order matters — it makes patterns much easier to see.
 
 </details>
+
+
+
+## 🗺️ 5.3. The Horizontal Bar Chart (Best for Long Names)
+```python
+# Switch x and y! Put region on the y-axis to lay the bars flat
+sns.countplot(data=df, y="region", palette="Set3")
+
+plt.title("TB Cases by Region (Horizontal View)")
+plt.xlabel("Number of Patients")
+plt.ylabel("Region")
+
+plt.show()
+```
+
+<details>
+
+<summary>📊 Horizontal Region Bar Chart — What this does</summary>
+
+## 📘 What this does
+
+- `sns.countplot(data=df, y="region")` → creates a horizontal bar chart showing counts of TB cases per region  
+- `palette="Set3"` → applies a color palette to make bars visually distinct  
+- `plt.title()` → adds a title to the chart  
+- `plt.xlabel()` → labels the X-axis (number of patients)  
+- `plt.ylabel()` → labels the Y-axis (region names)  
+- `plt.show()` → displays the final plot  
+
+---
+
+## ❌ Common mistakes beginners make
+
+- Confusing `x` and `y` in Seaborn countplot  
+- Missing column name consistency (`region` vs `Region`)  
+- Forgetting axis labels after switching orientation  
+- Using too many categories, making the chart long  
+
+---
+
+## 💡 Tip
+
+Horizontal bar charts are very useful when category names are long or many.
+
+</details>
+
+##📈 5.4.  The Simplified "Pandas-Only" Way Sorted Pandas Bar Chart Shortcut
+```python
+# 1. Count the regions (Pandas automatically sorts them highest to lowest!)
+region_counts = df["region"].value_counts()
+
+# 2. Plot as a bar chart with custom colors and clean black edges
+region_counts.plot(kind="bar", color="cornflowerblue", edgecolor="black")
+
+plt.title("TB Cases by Region")
+plt.xlabel("Region")
+plt.ylabel("Count")
+plt.xticks(rotation=45)
+
+plt.show()
+```
+<details>
+
+<summary>📊 Region Bar Chart (Pandas Version) — What this does</summary>
+
+## 📘 What this does
+
+- `df["region"].value_counts()` → counts how many TB cases exist in each region and sorts them from highest to lowest  
+- `region_counts.plot(kind="bar")` → creates a bar chart using Pandas plotting  
+- `color="cornflowerblue"` → sets bar color for better visual clarity  
+- `edgecolor="black"` → adds borders around bars for better separation  
+- `plt.title()` → adds a chart title  
+- `plt.xlabel()` → labels the X-axis (region names)  
+- `plt.ylabel()` → labels the Y-axis (number of cases)  
+- `plt.xticks(rotation=45)` → rotates region names to prevent overlap  
+- `plt.show()` → displays the final plot  
+
+---
+
+## ❌ Common mistakes beginners make
+
+- Forgetting that `value_counts()` already sorts data automatically  
+- Confusing Pandas plotting with Seaborn plotting  
+- Misspelling column names (`region` vs `Region`)  
+- Forgetting `plt.show()` so the chart does not appear  
+- Overlapping labels when not rotating x-axis text  
+
+---
+
+## 💡 Tip
+
+Pandas plotting is faster for quick analysis, while Seaborn is better for polished visualizations.
+
+</details>
+
+## 5.5 If you want both the Count AND the Percentage: Count (Percentage%)
+```python
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# 1. Create the chart
+ax = sns.countplot(data=df, x="region", palette="pastel")
+total = len(df)
+
+# 2. Add percentages on top of each bar (compact look)
+for p in ax.patches:
+    if p.get_height() > 0:
+        ax.annotate(f'{100 * p.get_height() / total:.1f}%', 
+                    (p.get_x() + p.get_width() / 2, p.get_height()), 
+                    ha='center', va='bottom', xytext=(0, 4), textcoords='offset points')
+
+# 3. Titles and clean layout
+plt.xticks(rotation=45)
+plt.title("Number of TB Cases by Region")
+plt.xlabel("Region of Origin")
+plt.ylabel("Patient Count")
+plt.show()
+```
+<details>
+
+<summary>📊 Region Bar Chart with Percentages — What this does</summary>
+
+## 📘 What this does
+
+- `sns.countplot(...)` → creates a bar chart showing number of TB cases per region  
+- `total = len(df)` → calculates total number of patients in the dataset  
+- `ax.patches` → loops through each bar in the chart  
+- `ax.annotate(...)` → writes percentage values on top of each bar  
+- `100 * p.get_height() / total` → converts counts into percentages  
+- `plt.xticks(rotation=45)` → rotates region labels to avoid overlap  
+- `plt.title()` → adds chart title  
+- `plt.xlabel()` → labels X-axis (region names)  
+- `plt.ylabel()` → labels Y-axis (patient count)  
+- `plt.show()` → displays final plot  
+
+---
+
+## ❌ Common mistakes beginners make
+
+- Forgetting to calculate `total = len(df)` before percentage calculation  
+- Using wrong column name (`region` vs `Region`)  
+- Not understanding `ax.patches` loop structure  
+- Overlapping labels when not rotating x-axis  
+- Incorrect percentage formula or integer division mistakes  
+
+---
+
+## 💡 Tip
+
+Adding percentages makes bar charts more informative and publication-ready, especially for epidemiology data.
+
+</details>
+
 ---
 
 # 🥧 6. CULTURE RESULT (PIE CHART)
