@@ -46,7 +46,7 @@ Python acts like a smart lab assistant that reduces manual work and improves acc
 ```python
 print("Hello, Microbiologist!")
 print("Welcome to Python for Microbiology Lab!")
-
+```
 <details> <summary><strong>Explanation</strong></summary>
 print() is a built-in Python function used to display output.
 Parentheses () hold the content you want to show.
@@ -54,6 +54,8 @@ Quotation marks " " indicate text (string data).
 Python executes code line by line from top to bottom.
 
 ### Common Error If you write:
+```python
 print(Hello, Microbiologist!)
+```
 print("Welcome to Python for Microbiology Lab!")
 
