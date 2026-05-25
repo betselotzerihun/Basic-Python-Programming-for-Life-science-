@@ -16,7 +16,37 @@ All work is done in Jupyter Notebooks only.
 
 ---
 
-# 📦 STEP 1 — Import Libraries
+# 📦 STEP 1 — Install and Import Libraries
+
+```python
+pip install pandas matplotlib seaborn biopython scikit-learn
+```
+<details>
+
+<summary>📦 pip install — What this does</summary>
+
+## 📘 What this does
+
+This command installs all required Python packages for your analysis:
+
+- pandas → data handling and tables (DataFrames)  
+- matplotlib → basic plotting and graphs  
+- seaborn → advanced statistical visualization  
+- biopython → phylogenetic tree handling (Bio.Phylo)  
+- scikit-learn → machine learning tools + SNP distance calculations  
+
+---
+
+## ❌ Common mistakes beginners make
+
+- Forgetting to activate the correct environment  
+- Installing packages in the wrong Python version  
+- Missing `!` when running in Jupyter (`!pip install ...`)  
+- Not restarting kernel after installation  
+
+---
+
+</details>
 
 ```python
 import pandas as pd
