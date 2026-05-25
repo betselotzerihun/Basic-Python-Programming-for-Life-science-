@@ -1,74 +1,44 @@
-# Basic-Python-Programming-for-Life-science
-
-
 # Python for Microbiologists - Basic Level
 
-**A gentle, beginner-friendly Python course designed specifically for microbiologists.**
+**A beginner-friendly Python course designed specifically for microbiologists.**
 
-Perfect for researchers working with bacterial growth, antibiotic testing, culture data, CFU counts, and microbial experiments.
+Focus: Bacterial growth data, CFU counts, OD readings, antibiotic assays, culture experiments, and simple statistics.
 
-**No prior coding experience needed.**
+**No prior programming experience required.**
 
-### Why Python for Microbiologists?
-- Automate repetitive calculations (CFU/ml, growth rates, OD readings)
-- Analyze plate counts, MIC data, and growth curves
-- Perform simple statistics on your lab results
-- Create publication-ready plots
-- Reproducible analysis (important for papers and theses)
+### Course Outline
 
-**Start → [01_Introduction.md](01_introduction.md)**
+1. [01_Introduction.md](01_introduction.md)  
+   - Why Python in Microbiology  
+   - Setup & First Program
 
-# 01 - Welcome to Python for Microbiologists
+2. [02_Variables_Data_Types.md](02_Variables_Data_Types.md)  
+   - Variables, numbers, text, and boolean values with lab examples
 
-## Why Learn Python as a Microbiologist?
-Microbiology generates lots of numerical data: colony counts, optical density (OD600), zone of inhibition, growth curves, pH readings, antibiotic concentrations, etc.
+3. [03_Control_Flow.md](03_Control_Flow.md)  
+   - Decision making (if-else) and loops using growth phases & replicates
 
-Python acts like a smart lab assistant that:
-- Never makes calculation mistakes
-- Can analyze hundreds of samples in seconds
-- Helps you make beautiful graphs for papers
+4. [04_Functions.md](04_Functions.md)  
+   - Reusable functions (CFU calculator, growth rate, etc.)
 
-**Real-life analogy**: Think of Python as your autoclave for data — it sterilizes errors and standardizes your analysis.
+5. [05_Data_Structures.md](05_Data_Structures.md)  
+   - Lists and Dictionaries for experiment data
 
-## First Code - Hello Microbiologist!
+6. [06_File_Handling.md](06_File_Handling.md)  
+   - Reading and writing lab data (CSV, simple text files)
 
-<details>
-<summary>Click to expand - Your first Python code</summary>
+7. [07_Pandas_Basics.md](07_Pandas_Basics.md)  
+   - Working with data tables (most important module)
 
-```python
-# This is a comment. Python ignores lines starting with #
-print("Hello, Microbiologist!")
-print("Welcome to Python for Microbiology Lab!")
-print("Today we will analyze bacterial growth data.")
+8. [08_Simple_Statistics.md](08_Simple_Statistics.md)  
+   - Mean, median, standard deviation, CV, correlation with microbiology data
 
+9. [09_Data_Visualization.md](09_Data_Visualization.md)  
+   - Growth curves, bar plots, box plots for papers
 
+10. [10_Mini_Project.md](10_Mini_Project.md)  
+    - Analyze a full bacterial growth experiment
 
----
+**Bonus**: Exercises + Sample Datasets
 
-### `02_variables.md`
-
-```markdown
-# 02 - Variables and Basic Data Types
-
-Variables are like labeled tubes in your rack — you store important values in them.
-
-## Common Types in Microbiology
-
-```python
-# Text (String)
-bacteria = "Escherichia coli"
-strain = "K-12"
-antibiotic = "Ampicillin"
-
-# Whole numbers (Integer)
-colony_count = 245
-dilution_factor = 10000
-
-# Decimal numbers (Float)
-od600 = 0.85          # Optical density reading
-growth_rate = 0.62    # per hour
-temperature = 37.5
-
-# True/False (Boolean)
-is_resistant = True
-is_gram_positive = False
+**Start with → [01_Introduction.md](01_introduction.md)**
