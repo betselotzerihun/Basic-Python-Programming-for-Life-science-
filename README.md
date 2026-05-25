@@ -232,7 +232,14 @@ Sometimes numbers get imported as "text" instead of real numeric values. This ha
 - Trying to calculate averages or build plots while the column is still stored as text instead of numbers.  
 
 ---
+💡 Tip
 
+Always verify conversion using:
+```python
+df["Age"].dtype
+```
+
+before doing statistical analysis.
 </details>
 
 ## 1.5. List Unique Categories
