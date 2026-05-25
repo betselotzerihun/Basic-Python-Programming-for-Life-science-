@@ -1,7 +1,6 @@
 # 01 - Introduction to Python for Microbiologists
 
-**Welcome to Python for Microbiologists!**  
-This course is specially designed for researchers and students working in microbiology labs. No prior programming experience is required.
+**Welcome to Python for Microbiologists!** This course is specially designed for researchers and students working in microbiology labs. No prior programming experience is required.
 
 ---
 
