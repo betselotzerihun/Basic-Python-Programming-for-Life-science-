@@ -134,6 +134,8 @@ Convert if needed:
 
 df["Age"] = pd.to_numeric(df["Age"], errors="coerce")
 
+</details>
+
 ---
 
 # 📊 4. SEX DISTRIBUTION (BAR CHART)
