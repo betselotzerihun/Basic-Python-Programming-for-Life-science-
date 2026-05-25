@@ -40,8 +40,6 @@ This command installs all required Python libraries for data analysis and visual
 
 ## ❌ Common mistakes beginners make
 
-- Forgetting to activate the correct Python environment  
-- Installing packages in the wrong Python version  
 - Missing `!` when running inside Jupyter (`!pip install ...`)  
 - Not restarting the kernel after installation  
 
@@ -108,25 +106,32 @@ df.head()
 
 <details>
 
-<summary>📂 pd.read_csv — What this does</summary>
+<summary>📂 Loading CSV — What this does</summary>
 
 ## 📘 What this does
 
-- `pd.read_csv()` reads your spreadsheet (`metadata.csv`) and turns it into a table in Python called a DataFrame (`df`).  
-- `df.head()` displays the top 5 rows of your table to quickly preview the data.  
+- `import pandas as pd` → imports the Pandas library for handling tabular data  
+- `pd.read_csv("metadata.csv")` → reads the CSV file and loads it into a DataFrame called `df`  
+- `df.head()` → displays the first 5 rows of the dataset to quickly check if the file loaded correctly  
 
 ---
 
 ## ❌ Common mistakes beginners make
 
-- **Missing File Error:** Running the code without uploading `metadata.csv` into the Jupyter workspace first.  
-- **Wrong spelling:** Typing the filename incorrectly (e.g., `Metadata.csv` instead of `metadata.csv`, or forgetting `.csv`).  
+- File not found error because `metadata.csv` is not in the working directory  
+- Typing the wrong filename or missing `.csv` extension  
+- Using `read_csv()` for Excel files instead of `read_excel()`  
+- Forgetting to assign the data to a variable like `df`  
 
 ---
 
 ## 💡 Tip
 
-Always use `df.head()` as your first step to confirm that Python successfully opened your file.
+Always run:
+
+```python
+df.head()
+```
 
 </details>
 
