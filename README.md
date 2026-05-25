@@ -188,9 +188,14 @@ Human typists often accidentally leave blank spaces in spreadsheets (for example
 
 ---
 
-## ❌ Common mistakes beginners make
+- `df.columns.str.strip()` → removes hidden spaces from all column names (e.g., `"Sex "` → `"Sex"`)  
+- `df["Sex"].str.strip()` → removes extra spaces from values in the `Sex` column (e.g., `"Male "` → `"Male"`)  
+- `df["CultureResult"].str.strip()` → removes extra spaces from values in the `CultureResult` column  
 
-- The **KeyError**: Trying to access a column using `df["Sex"]` and getting an error because the spreadsheet actually has it named `"Sex "` with a trailing space.
+---
+
+This helps ensure that Python treats values consistently without errors caused by invisible spaces.
+
 
 ---
 
