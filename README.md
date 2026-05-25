@@ -23,26 +23,27 @@ pip install pandas matplotlib seaborn biopython scikit-learn
 ```
 
 <details>
-<summary>📘 Explanation + Common Mistakes</summary>
+
+<summary>📦 pip install — What this does</summary>
 
 ## 📘 What this does
 
-This command installs all required Python packages for your analysis:
+This command installs all required Python libraries for data analysis and visualization:
 
 - pandas → data handling and tables (DataFrames)  
-- matplotlib → basic plotting and graphs  
+- matplotlib → basic plotting and graphing  
 - seaborn → advanced statistical visualization  
-- biopython → phylogenetic tree handling (Bio.Phylo)  
-- scikit-learn → machine learning tools + SNP distance calculations  
+- biopython → biological data tools (including phylogenetic trees)  
+- scikit-learn → machine learning tools and SNP distance calculations  
 
 ---
 
 ## ❌ Common mistakes beginners make
 
-- Forgetting to activate the correct environment  
+- Forgetting to activate the correct Python environment  
 - Installing packages in the wrong Python version  
-- Missing `!` when running in Jupyter (`!pip install ...`)  
-- Not restarting kernel after installation  
+- Missing `!` when running inside Jupyter (`!pip install ...`)  
+- Not restarting the kernel after installation  
 
 ---
 
@@ -258,7 +259,69 @@ For example, it can reveal if a dataset contains both `"Positive"` and `"positiv
 ---
 
 
-# 📊 3. AGE DISTRIBUTION (HISTOGRAM)
+# 📊 3. AGE DISTRIBUTION 
+
+## 3.1. Draw the Base Histogram
+```python
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Draw just the plain bars
+sns.histplot(df["Age"])
+
+# Always put this at the very end to show the plot
+plt.show()
+```
+<details>
+
+<summary>📊 Histogram Code — Line-by-Line Explanation</summary>
+
+## 📘 Line-by-line explanation
+
+### `import matplotlib.pyplot as plt`
+
+This imports Matplotlib’s plotting module, which is responsible for displaying figures and graphs in Python.
+
+We shorten it to `plt` so we can easily call plotting functions.
+
+---
+
+### `import seaborn as sns`
+
+This imports Seaborn, a high-level visualization library built on top of Matplotlib.
+
+We shorten it to `sns` so we can quickly call visualization functions like histograms, bar plots, and heatmaps.
+
+---
+
+### `sns.histplot(df["Age"])`
+
+This creates a histogram of the `Age` column from your dataset.
+
+- It groups ages into bins (age ranges)  
+- Then counts how many patients fall into each bin  
+- Helps you understand the distribution of ages  
+
+---
+
+### `plt.show()`
+
+This command displays the plot on the screen.
+
+Without it, the graph may not appear in some environments (especially scripts or some Jupyter setups).
+
+---
+
+## ❌ Common mistakes beginners make
+
+- Forgetting to import `seaborn` or `matplotlib`  
+- Using a column name that does not exist (e.g., `"age"` vs `"Age"`)  
+- Not checking if `Age` contains text instead of numbers  
+- Forgetting `plt.show()` so the plot does not display  
+
+---
+
+</details>
 
 ```python
 import matplotlib.pyplot as plt
