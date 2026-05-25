@@ -257,35 +257,6 @@ For example, it can reveal if a dataset contains both `"Positive"` and `"positiv
 
 ---
 
-## 📋 2. Check Dataset Structure
-
-```python
-df.shape
-df.columns
-```
-
-<details>
-<summary>📘 Explanation + Common Mistakes</summary>
-
-## What this does
-
-- Shows number of patients (rows)  
-- Shows number of features (columns)  
-
----
-
-## ❌ Common mistakes beginners make
-
-- Ignoring column names before plotting  
-- Assuming column names are standardized  
-
----
-
-## 💡 Tip
-
-Always inspect columns first in real clinical datasets.
-
-</details>
 
 # 📊 3. AGE DISTRIBUTION (HISTOGRAM)
 
