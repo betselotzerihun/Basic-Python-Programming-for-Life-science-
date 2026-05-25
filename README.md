@@ -92,44 +92,166 @@ Always run this cell before anything else.
 
 ---
 
-# 📂 1. Load Your Metadata (Real Dataset)
-Before creating plots, data must be properly imported, inspected, and sanitized. Hand-collected clinical datasets often contain hidden issues like trailing spaces, mixed missing-value formats, or incorrect data types.
+## 📂 1. Load Your Metadata (Real Dataset)
+Before creating plots, data must be properly imported, inspected, and sanitized. Hand-collected clinical datasets often contain hidden issues like trailing spaces or incorrect data types.
 
 ```
 import pandas as pd
 
-# Load the raw dataset
+# 1. Load the data into Python
 df = pd.read_csv("metadata.csv")
 
-# Display the first 5 rows to verify it loaded correctly
+# 2. Show the first few lines to make sure it looks correct
 df.head()
 ```
 
 <details>
 
-<summary>📂 Load CSV — What this does</summary>
+<summary>📂 pd.read_csv — What this does</summary>
 
 ## 📘 What this does
 
-- Uses `pd.read_csv()` to parse a comma-separated text file into a structured tabular format called a DataFrame.  
-- `.head()` previews the top 5 records to make sure rows and columns are aligned correctly.  
+- `pd.read_csv()` reads your spreadsheet (`metadata.csv`) and turns it into a table in Python called a DataFrame (`df`).  
+- `df.head()` displays the top 5 rows of your table to quickly preview the data.  
 
 ---
 
 ## ❌ Common mistakes beginners make
 
-- **FileNotFoundError:** The notebook is running in a different folder than where `metadata.csv` is saved.  
-- **File extension confusion:** Trying to use `pd.read_csv()` on an Excel (`.xlsx`) file instead of using `pd.read_excel()`.
+- **Missing File Error:** Running the code without uploading `metadata.csv` into the Jupyter workspace first.  
+- **Wrong spelling:** Typing the filename incorrectly (e.g., `Metadata.csv` instead of `metadata.csv`, or forgetting `.csv`).  
 
 ---
 
 ## 💡 Tip
 
-If your file is in a subfolder called `data`, update the path like this:
+Always use `df.head()` as your first step to confirm that Python successfully opened your file.
+
+</details>
+
+
+## 1.2. Check Table Size and Columns
+```python
+# 1. See how many rows and columns you have (Rows, Columns)
+print(df.shape)
+
+# 2. See a simple list of all your column titles
+print(df.columns)
+```
+<details>
+
+<summary>📊 Dataset Structure — What this does</summary>
+
+## 📘 What this does
+
+- `df.shape` acts like a tape measure. It tells you exactly how many patients (rows) and characteristics (columns) are in your file.  
+- `df.columns` prints out a clean list of every column header so you know exactly how they are spelled.  
+
+---
+
+## ❌ Common mistakes beginners make
+
+- Adding parentheses: writing `df.shape()` instead of `df.shape`.  
+  - `shape` is a property, not a function, so it does not need `()`.
+
+---
+
+</details>
+
+## 1.3. Remove Hidden Blank Spaces
+```python
+# 1. Clean the column names (remove hidden spaces at the start/end)
+df.columns = df.columns.str.strip()
+
+# 2. Clean the 'Sex' column entries specifically
+df["Sex"] = df["Sex"].str.strip()
+
+# 3. Clean the 'CultureResult' column entries specifically
+df["CultureResult"] = df["CultureResult"].str.strip()
+```
+
+<details>
+
+<summary>🧹 Cleaning Text — What this does</summary>
+
+## 📘 What this does
+
+Human typists often accidentally leave blank spaces in spreadsheets (for example, typing `"Male "` instead of `"Male"` or naming a column `"Sex "` with an invisible trailing space).
+
+`.str.strip()` acts like an eraser that automatically removes invisible spaces from the edges of your text.
+
+---
+
+## ❌ Common mistakes beginners make
+
+- The **KeyError**: Trying to access a column using `df["Sex"]` and getting an error because the spreadsheet actually has it named `"Sex "` with a trailing space.
+
+---
+
+## 💡 Tip
+
+If Python says a column doesn't exist, always check your raw spreadsheet for hidden spaces!
+
+</details>
+
+## 1.4. Convert Age Into Numbers
 
 ```python
-pd.read_csv("data/metadata.csv")
+# 1. Force the 'Age' column to be read as math numbers
+df["Age"] = pd.to_numeric(df["Age"], errors="coerce")
+
+# 2. Check the column's average to prove it is numeric now
+print(df["Age"].mean())
 ```
+<details>
+
+<summary>🔢 Converting to Numbers — What this does</summary>
+
+## 📘 What this does
+
+Sometimes numbers get imported as "text" instead of real numeric values. This happens if a column contains words like `"Unknown"` or has typing errors.
+
+- `pd.to_numeric()` converts the column into proper numeric values.  
+- `errors="coerce"` tells Python: if a value cannot be converted into a number, turn it into `NaN` (empty value) instead of crashing.
+
+---
+
+## ❌ Common mistakes beginners make
+
+- Trying to calculate averages or build plots while the column is still stored as text instead of numbers.  
+
+---
+
+</details>
+
+## 1.5. List Unique Categories
+```python
+# 1. See all unique categories inside the 'Sex' column
+print(df["Sex"].unique())
+
+# 2. See all unique categories inside the 'CultureResult' column
+print(df["CultureResult"].unique())
+```
+
+<details>
+
+<summary>🔍 Finding Unique Values — What this does</summary>
+
+## 📘 What this does
+
+`.unique()` shows every single unique value present in a column without repeating duplicates.
+
+It is very useful for checking data quality and spotting inconsistencies.
+
+For example, it can reveal if a dataset contains both `"Positive"` and `"positive"` as separate categories.
+
+---
+
+## ❌ Common mistakes beginners make
+
+- Skipping this step and later discovering duplicated categories in plots caused by simple typos or inconsistent labeling.  
+
+---
 
 </details>
 
