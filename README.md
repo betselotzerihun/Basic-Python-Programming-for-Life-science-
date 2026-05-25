@@ -62,223 +62,155 @@ Always run this cell before anything else.
 
 ---
 
-# 📂 1. Load Metadata Table
+# 📂 1. Load Your Metadata (Real Dataset)
+```
+import pandas as pd
 
-```python
 df = pd.read_csv("metadata.csv")
 
 df.head()
 ```
 
-<details>
-<summary>📘 Explanation + Common Mistakes</summary>
+<details> <summary>📘 Explanation + Common Mistakes</summary>
+What this does
+Loads your TB clinical metadata dataset
+Displays first rows
+❌ Common mistakes beginners make
+File not in notebook folder
+Wrong separator (CSV vs Excel confusion)
+Encoding issues in real datasets
+💡 Tip
 
-## What this does
-
-- Loads TB isolate metadata
-- Reads CSV file into a DataFrame
-- Displays first rows of dataset
-
----
-
-## ❌ Common mistakes beginners make
-
-- File not located in notebook directory
-- Wrong filename spelling
-- Forgetting quotation marks around filename
-- Trying to load Excel file using `read_csv()`
-
----
-
-## 💡 Tip
-
-Use `df.head()` to preview data quickly.
+Always start with df.head() to confirm data loaded correctly.
 
 </details>
 
 ---
 
-# 📋 2. View Table Summary
+## 📋 2. Check Dataset Structure
 
 ```python
 df.shape
-
 df.columns
 ```
 
-<details>
-<summary>📘 Explanation + Common Mistakes</summary>
+<details> <summary>📘 Explanation + Common Mistakes</summary>
+What this does
+Shows number of patients (rows)
+Shows number of features (columns)
+❌ Common mistakes beginners make
+Ignoring column names before plotting
+Assuming column names are standardized
+💡 Tip
 
-## What this does
-
-- Shows dataset dimensions
-- Displays column names
-
----
-
-## ❌ Common mistakes beginners make
-
-- Thinking `.columns()` is a function
-- Skipping dataset inspection before plotting
-- Ignoring missing values
-
----
-
-## 💡 Tip
-
-Always inspect dataset structure first.
+Always inspect columns first in real clinical datasets.
 
 </details>
 
----
-
-# 📊 3. Bar Chart — Lineage Distribution
+# 📊 3. AGE DISTRIBUTION (HISTOGRAM)
 
 ```python
-sns.countplot(data=df, x="lineage")
+import matplotlib.pyplot as plt
+import seaborn as sns
 
-plt.title("TB Lineage Distribution")
+sns.histplot(df["Age"], bins=20)
+
+plt.title("Age Distribution of TB Patients")
 
 plt.show()
 ```
 
-<details>
-<summary>📘 Explanation + Common Mistakes</summary>
+<details> <summary>📘 Explanation + Common Mistakes</summary>
+What this does
+Shows distribution of patient ages
+Helps understand affected population
+❌ Common mistakes beginners make
+Age column stored as string instead of numeric
+Missing values in Age column
+Too many bins making plot noisy
+💡 Tip
 
-## What this does
+Convert if needed:
 
-- Counts isolates per lineage
-- Creates bar chart visualization
-
----
-
-## ❌ Common mistakes beginners make
-
-- Wrong column names
-- Forgetting `plt.show()`
-- Missing lineage values
+df["Age"] = pd.to_numeric(df["Age"], errors="coerce")
 
 ---
 
-## 💡 Tip
-
-Check column names using:
+# 📊 4. SEX DISTRIBUTION (BAR CHART)
 
 ```python
-df.columns
+sns.countplot(data=df, x="Sex")
+
+plt.title("Gender Distribution")
+
+plt.show()
 ```
+
+<details> <summary>📘 Explanation + Common Mistakes</summary>
+What this does
+Counts male vs female patients
+Shows simple distribution
+❌ Common mistakes beginners make
+Column written as sex vs Sex
+Missing values or inconsistent labels (M, Male, male)
+💡 Tip
+
+Standardize values first:
+df["Sex"] = df["Sex"].str.lower()
+
+</details>
+
+
+---
+
+# 📊 5. REGION DISTRIBUTION
+
+```python
+df["region"].value_counts().plot.bar()
+
+plt.title("TB Cases by Region")
+
+plt.show()
+```
+
+<details> <summary>📘 Explanation + Common Mistakes</summary>
+What this does
+Shows number of TB cases per region
+❌ Common mistakes beginners make
+Spelling inconsistencies in region names
+Too many categories cluttering plot
+💡 Tip
+
+Clean spelling before plotting.
 
 </details>
 
 ---
 
-# 🥧 4. Pie Chart — Lineage Proportion
+# 🥧 6. CULTURE RESULT (PIE CHART)
 
 ```python
-df["lineage"].value_counts().plot.pie(
+df["CultureResult"].value_counts().plot.pie(
     autopct="%1.1f%%"
 )
 
-plt.title("Lineage Proportion")
+plt.title("TB Culture Results")
 
 plt.ylabel("")
 
 plt.show()
 ```
+<details> <summary>📘 Explanation + Common Mistakes</summary>
+What this does
+Shows proportion of positive vs negative TB cases
+❌ Common mistakes beginners make
+Missing .value_counts()
+Too many categories in pie chart
+Inconsistent labels (Positive vs positive)
+💡 Tip
 
-<details>
-<summary>📘 Explanation + Common Mistakes</summary>
-
-## What this does
-
-- Converts lineage counts into percentages
-- Displays lineage proportion using pie chart
-
----
-
-## ❌ Common mistakes beginners make
-
-- Forgetting `.value_counts()`
-- Using too many categories
-- Forgetting `plt.ylabel("")`
-
----
-
-## 💡 Tip
-
-Pie charts work best with few categories.
-
-</details>
-
----
-
-# 📈 5. Line Graph — Coverage Trend
-
-```python
-cov = pd.read_csv("coverage.csv")
-
-plt.plot(cov["coverage_depth"])
-
-plt.title("Sequencing Coverage Trend")
-
-plt.xlabel("Samples")
-
-plt.ylabel("Depth")
-
-plt.show()
-```
-
-<details>
-<summary>📘 Explanation + Common Mistakes</summary>
-
-## What this does
-
-- Plots sequencing depth across samples
-- Shows sequencing quality trend
-
----
-
-## ❌ Common mistakes beginners make
-
-- Wrong column name
-- Non-numeric values
-- Assuming data is sorted
-
----
-
-## 💡 Tip
-
-Inspect coverage data before plotting.
-
-</details>
-
----
-
-# 📋 6. CSV Table Preview
-
-```python
-df.head(10)
-```
-
-<details>
-<summary>📘 Explanation + Common Mistakes</summary>
-
-## What this does
-
-- Displays first 10 rows of dataset
-
----
-
-## ❌ Common mistakes beginners make
-
-- Using `print(df)` for large tables
-- Displaying full dataset accidentally
-
----
-
-## 💡 Tip
-
-Use `.head()` for quick previews.
+Normalize text first:
+df["CultureResult"] = df["CultureResult"].str.lower()
 
 </details>
 
@@ -288,201 +220,105 @@ Use `.head()` for quick previews.
 
 ---
 
-# 🧬 7. Load SNP Matrix
+# 🌍 7. REGION vs CULTURE RESULT (HEATMAP)
 
 ```python
-snp = pd.read_csv(
-    "snps.csv",
-    index_col=0
-)
+cross = pd.crosstab(df["region"], df["CultureResult"])
 
-snp.head()
-```
+sns.heatmap(cross, annot=True, cmap="Reds")
 
-<details>
-<summary>📘 Explanation + Common Mistakes</summary>
-
-## What this does
-
-- Loads SNP matrix
-- Uses isolate IDs as row index
-
----
-
-## ❌ Common mistakes beginners make
-
-- Forgetting `index_col=0`
-- SNP values not numeric
-- Missing values in SNP matrix
-
----
-
-## 💡 Tip
-
-SNP matrices should usually contain only:
-- 0 = absence
-- 1 = presence
-
-</details>
-
----
-
-# 🧮 8. SNP Distance Calculation
-
-```python
-distance = pairwise_distances(
-    snp,
-    metric="hamming"
-)
-```
-
-<details>
-<summary>📘 Explanation + Common Mistakes</summary>
-
-## What this does
-
-- Computes genetic distance between isolates
-- Uses Hamming distance metric
-
----
-
-## ❌ Common mistakes beginners make
-
-- Missing values (`NaN`)
-- Non-numeric SNP matrix
-- Wrong distance metric
-
----
-
-## 💡 Tip
-
-Clean SNP data before analysis.
-
-</details>
-
----
-
-# 🌡️ 9. SNP Heatmap
-
-```python
-sns.heatmap(distance)
-
-plt.title("SNP Distance Matrix")
+plt.title("Region vs TB Outcome")
 
 plt.show()
 ```
 
-<details>
-<summary>📘 Explanation + Common Mistakes</summary>
+<details> <summary>📘 Explanation + Common Mistakes</summary>
+What this does
+Compares TB positivity across regions
+Shows patterns in disease distribution
+❌ Common mistakes beginners make
+Wrong column names
+Missing values breaking crosstab
+Too many regions making heatmap crowded
+💡 Tip
 
-## What this does
+Keep categories limited for teaching.
 
-- Visualizes genetic similarity between isolates
-- Displays SNP distance patterns
-
----
-
-## ❌ Common mistakes beginners make
-
-- Large datasets slowing notebooks
-- Missing labels
-- Overcrowded heatmaps
-
----
-
-## 💡 Tip
-
-Use smaller datasets during beginner training.
+</details>
 
 </details>
 
 ---
 
-# 🌳 10. Phylogenetic Tree Visualization
+# 📊 8. SMOKING vs CULTURE RESULT
 
 ```python
-tree = Phylo.read(
-    "tree.nwk",
-    "newick"
-)
+sns.countplot(data=df, x="Smoking", hue="CultureResult")
 
-Phylo.draw(tree)
+plt.title("Smoking vs TB Outcome")
+
+plt.show()
 ```
 
-<details>
-<summary>📘 Explanation + Common Mistakes</summary>
+<details> <summary>📘 Explanation + Common Mistakes</summary>
+What this does
+Compares smoking status with TB infection outcome
+❌ Common mistakes beginners make
+Yes/No not standardized
+Missing values in categorical columns
+💡 Tip
 
-## What this does
+Clean values:
+df["Smoking"] = df["Smoking"].str.lower()
 
-- Reads phylogenetic tree
-- Displays evolutionary relationships between TB isolates
-
----
-
-## ❌ Common mistakes beginners make
-
-- Wrong tree format
-- Broken `.nwk` file
-- Missing Biopython installation
 
 ---
 
-## 💡 Tip
+# 9. AGE vs CULTURE RESULT (LINE GRAPH STYLE)
 
-Validate tree file before visualization.
+```python
+df.groupby("Age")["CultureResult"].value_counts().unstack().plot()
+
+plt.title("Age vs TB Outcome")
+
+plt.show()
+```
+
+<details> <summary>📘 Explanation + Common Mistakes</summary>
+What this does
+Shows how TB positivity varies by age
+❌ Common mistakes beginners make
+Age treated as categorical instead of numeric
+No sorting of age values
+💡 Tip
+
+Sort age if graph looks messy.
 
 </details>
 
 ---
 
-# 📊 FINAL SUMMARY — WHAT YOU LEARNED
+# 🌍 10. ORIGIN (ComeFrom) ANALYSIS
 
-After this training, you can:
+```python
+df["ComeFrom"].value_counts().plot.bar()
 
+plt.title("Patient Origin Distribution")
+
+plt.show()
+```
+
+<details> <summary>📘 Explanation + Common Mistakes</summary>
+What this does
+Shows where patients came from (migration/travel patterns)
+❌ Common mistakes beginners make
+Different spelling of same location (Saudi Arabia vs SaudiArabia)
+💡 Tip
+
+Standardize location names first.
+
+</details>
 ---
 
-## 📂 Metadata Exploration
-
-- Load TB datasets
-- Explore metadata tables
-- Inspect isolate information
-
----
-
-## 📊 Visualization
-
-- Bar charts
-- Pie charts
-- Line graphs
-- Heatmaps
-- Table previews
-
----
-
-## 🧬 SNP Analysis
-
-- Load SNP matrices
-- Compute genetic distances
-- Visualize SNP similarity
-
----
-
-## 🌳 Phylogenetic Trees
-
-- Read Newick trees
-- Visualize evolutionary relationships
-
----
-
-# 📌 FINAL NOTE
-
-This training is designed to be:
-
-- ✔ beginner-friendly
-- ✔ notebook-based
-- ✔ visual
-- ✔ practical
-- ✔ TB genomics focused
-- ✔ easy to reproduce
 
 ---
