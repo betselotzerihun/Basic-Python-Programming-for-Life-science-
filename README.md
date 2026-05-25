@@ -21,9 +21,9 @@ All work is done in Jupyter Notebooks only.
 ```python
 pip install pandas matplotlib seaborn biopython scikit-learn
 ```
-<details>
 
-<summary>📦 pip install — What this does</summary>
+<details>
+<summary>📘 Explanation + Common Mistakes</summary>
 
 ## 📘 What this does
 
