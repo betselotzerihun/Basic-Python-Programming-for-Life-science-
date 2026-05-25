@@ -201,8 +201,8 @@ Standardize values first:
 
 ```python
 df["Sex"] = df["Sex"].str.lower()
-</details> ```
-
+```
+</details> 
 
 ---
 
@@ -216,13 +216,23 @@ plt.title("TB Cases by Region")
 plt.show()
 ```
 
-<details> <summary>📘 Explanation + Common Mistakes</summary>
-What this does
-Shows number of TB cases per region
-❌ Common mistakes beginners make
-Spelling inconsistencies in region names
-Too many categories cluttering plot
-💡 Tip
+<details>
+<summary>📘 Explanation + Common Mistakes</summary>
+
+## What this does
+
+- Shows number of TB cases per region  
+
+---
+
+## ❌ Common mistakes beginners make
+
+- Spelling inconsistencies in region names  
+- Too many categories cluttering plot  
+
+---
+
+## 💡 Tip
 
 Clean spelling before plotting.
 
@@ -243,23 +253,32 @@ plt.ylabel("")
 
 plt.show()
 ```
-<details> <summary>📘 Explanation + Common Mistakes</summary>
-What this does
-Shows proportion of positive vs negative TB cases
-❌ Common mistakes beginners make
-Missing .value_counts()
-Too many categories in pie chart
-Inconsistent labels (Positive vs positive)
-💡 Tip
+<details>
+<summary>📘 Explanation + Common Mistakes</summary>
 
-Normalize text first:
-df["CultureResult"] = df["CultureResult"].str.lower()
+## What this does
 
-</details>
+- Shows proportion of positive vs negative TB cases  
 
 ---
 
-# 📅 DAY 2 — SNP ANALYSIS + PHYLOGENY
+## ❌ Common mistakes beginners make
+
+- Missing `.value_counts()`  
+- Too many categories in pie chart  
+- Inconsistent labels (Positive vs positive)  
+
+---
+
+## 💡 Tip
+
+Normalize text first:
+
+```python
+df["CultureResult"] = df["CultureResult"].str.lower()
+```
+</details>
+---
 
 ---
 
@@ -275,19 +294,27 @@ plt.title("Region vs TB Outcome")
 plt.show()
 ```
 
-<details> <summary>📘 Explanation + Common Mistakes</summary>
-What this does
-Compares TB positivity across regions
-Shows patterns in disease distribution
-❌ Common mistakes beginners make
-Wrong column names
-Missing values breaking crosstab
-Too many regions making heatmap crowded
-💡 Tip
+<details>
+<summary>📘 Explanation + Common Mistakes</summary>
+
+## What this does
+
+- Compares TB positivity across regions  
+- Shows patterns in disease distribution  
+
+---
+
+## ❌ Common mistakes beginners make
+
+- Wrong column names  
+- Missing values breaking crosstab  
+- Too many regions making heatmap crowded  
+
+---
+
+## 💡 Tip
 
 Keep categories limited for teaching.
-
-</details>
 
 </details>
 
@@ -303,17 +330,30 @@ plt.title("Smoking vs TB Outcome")
 plt.show()
 ```
 
-<details> <summary>📘 Explanation + Common Mistakes</summary>
-What this does
-Compares smoking status with TB infection outcome
-❌ Common mistakes beginners make
-Yes/No not standardized
-Missing values in categorical columns
-💡 Tip
+<details>
+<summary>📘 Explanation + Common Mistakes</summary>
+
+## What this does
+
+- Compares smoking status with TB infection outcome  
+
+---
+
+## ❌ Common mistakes beginners make
+
+- Yes/No not standardized  
+- Missing values in categorical columns  
+
+---
+
+## 💡 Tip
 
 Clean values:
-df["Smoking"] = df["Smoking"].str.lower()
 
+```python
+df["Smoking"] = df["Smoking"].str.lower()
+```
+</details>
 
 ---
 
@@ -327,13 +367,23 @@ plt.title("Age vs TB Outcome")
 plt.show()
 ```
 
-<details> <summary>📘 Explanation + Common Mistakes</summary>
-What this does
-Shows how TB positivity varies by age
-❌ Common mistakes beginners make
-Age treated as categorical instead of numeric
-No sorting of age values
-💡 Tip
+<details>
+<summary>📘 Explanation + Common Mistakes</summary>
+
+## What this does
+
+- Shows how TB positivity varies by age  
+
+---
+
+## ❌ Common mistakes beginners make
+
+- Age treated as categorical instead of numeric  
+- No sorting of age values  
+
+---
+
+## 💡 Tip
 
 Sort age if graph looks messy.
 
@@ -351,12 +401,22 @@ plt.title("Patient Origin Distribution")
 plt.show()
 ```
 
-<details> <summary>📘 Explanation + Common Mistakes</summary>
-What this does
-Shows where patients came from (migration/travel patterns)
-❌ Common mistakes beginners make
-Different spelling of same location (Saudi Arabia vs SaudiArabia)
-💡 Tip
+<details>
+<summary>📘 Explanation + Common Mistakes</summary>
+
+## What this does
+
+- Shows where patients came from (migration/travel patterns)  
+
+---
+
+## ❌ Common mistakes beginners make
+
+- Different spelling of same location (Saudi Arabia vs SaudiArabia)  
+
+---
+
+## 💡 Tip
 
 Standardize location names first.
 
