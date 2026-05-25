@@ -88,40 +88,48 @@ Always run this cell before anything else.
 
 ---
 
-# 📅 DAY 1 — METADATA + BASIC VISUALIZATION
+# METADATA + BASIC VISUALIZATION
 
 ---
 
 # 📂 1. Load Your Metadata (Real Dataset)
+Before creating plots, data must be properly imported, inspected, and sanitized. Hand-collected clinical datasets often contain hidden issues like trailing spaces, mixed missing-value formats, or incorrect data types.
+
 ```
 import pandas as pd
 
+# Load the raw dataset
 df = pd.read_csv("metadata.csv")
 
+# Display the first 5 rows to verify it loaded correctly
 df.head()
 ```
 
 <details>
-<summary>📘 Explanation + Common Mistakes</summary>
 
-## What this does
+<summary>📂 Load CSV — What this does</summary>
 
-- Loads your TB clinical metadata dataset  
-- Displays first rows  
+## 📘 What this does
+
+- Uses `pd.read_csv()` to parse a comma-separated text file into a structured tabular format called a DataFrame.  
+- `.head()` previews the top 5 records to make sure rows and columns are aligned correctly.  
 
 ---
 
 ## ❌ Common mistakes beginners make
 
-- File not in notebook folder  
-- Wrong separator (CSV vs Excel confusion)  
-- Encoding issues in real datasets  
+- **FileNotFoundError:** The notebook is running in a different folder than where `metadata.csv` is saved.  
+- **File extension confusion:** Trying to use `pd.read_csv()` on an Excel (`.xlsx`) file instead of using `pd.read_excel()`.
 
 ---
 
 ## 💡 Tip
 
-Always start with `df.head()` to confirm data loaded correctly.
+If your file is in a subfolder called `data`, update the path like this:
+
+```python
+pd.read_csv("data/metadata.csv")
+```
 
 </details>
 
