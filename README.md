@@ -536,9 +536,7 @@ plt.xticks(rotation=45)
 plt.title("Number of TB Cases by Region")
 plt.xlabel("Region of Origin")
 plt.ylabel("Patient Count")
-
 plt.show()
-```
 ```
 
 <details>
@@ -570,6 +568,7 @@ plt.show()
 Use `countplot()` when you want to quickly compare category counts across groups.
 
 </details>
+
 ## 5.2. Sorting the Bars from Highest to Lowest
 ```python
 # 1. Find the order of regions from most frequent to least frequent
