@@ -1,5 +1,4 @@
 # 🧬 Python for Visualization
-## 2-Day Beginner Notebook Training (Focused Edition)
 
 ---
 
