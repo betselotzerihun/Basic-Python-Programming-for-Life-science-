@@ -204,7 +204,160 @@ If Python says a column doesn't exist, always check your raw spreadsheet for hid
 
 </details>
 
-## 1.4. Convert Age Into Numbers
+## 1.4. Count Missing (Empty) Cells
+
+```python
+# 1. Count how many empty/blank cells are in each column
+print(df.isnull().sum())
+```
+<details>
+
+<summary>🧹 Missing Values Check — What this does</summary>
+
+## 📘 What this does
+
+- `df.isnull()` → checks every cell in the dataset to see whether it is empty (NaN) or not  
+- `.sum()` → counts how many missing values exist in each column  
+- `print(...)` → displays the results clearly in the notebook or terminal  
+
+This helps identify columns that may need cleaning before analysis or visualization.
+
+---
+
+## ❌ Common mistakes beginners make
+
+- Assuming datasets are complete without checking for missing values  
+- Confusing empty strings (`""`) with true missing values (`NaN`)  
+- Ignoring missing data before plotting or statistical analysis  
+- Forgetting that missing values can break some calculations and visualizations  
+
+---
+
+## 💡 Tip
+
+Always check for missing values early in your workflow before performing analysis.
+
+</details>
+
+## 1.5 Count How Many Times Each Category Appears
+```python
+# 1. Count how many patients come from each region
+print(df["region"].value_counts())
+
+# 2. Count how many patients are smokers vs non-smokers
+print(df["Smoking"].value_counts())
+```
+<details>
+
+<summary>📊 Category Counts — What this does</summary>
+
+## 📘 What this does
+
+- `df["region"].value_counts()` → counts how many patients come from each region and sorts them from highest to lowest  
+- `df["Smoking"].value_counts()` → counts how many patients are smokers vs non-smokers  
+
+- `print(...)` → displays the results clearly in the notebook or terminal  
+
+These functions are used to quickly understand how data is distributed across categories.
+
+---
+
+## ❌ Common mistakes beginners make
+
+- Forgetting that `value_counts()` automatically sorts results  
+- Misspelling column names (`Smoking` vs `smoking`)  
+- Not noticing inconsistent labels (e.g., `Yes`, `yes`, `YES`)  
+- Assuming categories are already clean without checking  
+
+---
+
+## 💡 Tip
+
+Always run `value_counts()` before visualization to understand your dataset structure.
+
+</details>
+
+If you want to see these counts as percentages instead of raw numbers, add normalize=True and multiply by $100$:]
+```python
+df["region"].value_counts(normalize=True) * 100
+```
+## 1.6  Viewing Only Specific Columns
+```python
+# 1. Choose a few specific columns to look at
+mini_df = df[["Age", "Sex", "region"]]
+
+# 2. Preview the new smaller table
+mini_df.head()
+```
+<details>
+
+<summary>📋 Selecting Specific Columns — What this does</summary>
+
+## 📘 What this does
+
+- `df[["Age", "Sex", "region"]]` → selects only the specified columns from the full dataset  
+- `mini_df = ...` → creates a new smaller DataFrame containing only those columns  
+- `mini_df.head()` → displays the first 5 rows of the reduced dataset for preview  
+
+This is useful when you want to focus only on important variables and simplify your analysis.
+
+---
+
+## ❌ Common mistakes beginners make
+
+- Forgetting double brackets `[[ ]]` when selecting multiple columns  
+- Misspelling column names (`region` vs `Region`)  
+- Expecting the original dataset (`df`) to change (it does not)  
+- Trying to select columns that do not exist in the dataset  
+
+---
+
+## 💡 Tip
+
+Creating a smaller dataset helps make analysis faster and easier to manage, especially with large clinical data.
+
+</details>
+
+## 1.7 Filtering Rows (Finding Specific Patients)
+
+```python
+# 1. Filter out and view only patients who are older than 30 years old
+older_patients = df[df["Age"] > 30]
+
+# 2. Check how many patients matched this condition (Rows, Columns)
+print(older_patients.shape)
+```
+<details>
+
+<summary>🔎 Filtering Data — Patients Older Than 30</summary>
+
+## 📘 What this does
+
+- `df[df["Age"] > 30]` → filters the dataset to include only patients whose age is greater than 30  
+- `older_patients = ...` → stores the filtered dataset in a new variable  
+- `older_patients.shape` → shows how many rows (patients) and columns are in the filtered dataset  
+- `print(...)` → displays the result in the notebook or terminal  
+
+This helps you focus on a specific subgroup of patients for analysis.
+
+---
+
+## ❌ Common mistakes beginners make
+
+- Forgetting to ensure `Age` is numeric before filtering  
+- Using incorrect comparison operators (`=` instead of `>`)  
+- Thinking the original dataset (`df`) is modified (it is not)  
+- Missing parentheses or incorrect column names (`age` vs `Age`)  
+
+---
+
+## 💡 Tip
+
+Filtering is one of the most powerful tools in data analysis—always double-check your conditions before applying them.
+
+</details>
+
+## 1.8. Convert Age Into Numbers
 
 ```python
 # 1. Force the 'Age' column to be read as math numbers
@@ -241,7 +394,48 @@ df["Age"].dtype
 before doing statistical analysis.
 </details>
 
-## 1.5. List Unique Categories
+## 1.9. Renaming Columns for Cleanliness
+```python
+# 1. Fix capitalization and remove question marks from column headers
+df = df.rename(columns={"region": "Region", "ChewKhat?": "ChewKhat"})
+
+# 2. Print columns to verify the change
+print(df.columns)
+```
+<details>
+
+<summary>🏷️ Renaming Columns — What this does</summary>
+
+## 📘 What this does
+
+- `df.rename(columns={"region": "Region", "ChewKhat?": "ChewKhat"})`  
+  → renames columns to fix inconsistencies in naming  
+  → changes:
+  - `region` → `Region`  
+  - `ChewKhat?` → `ChewKhat`  
+
+- `df = ...` → saves the updated column names back into the DataFrame  
+- `print(df.columns)` → displays all column names to confirm the changes worked  
+
+This helps standardize column names so analysis and plotting work correctly.
+
+---
+
+## ❌ Common mistakes beginners make
+
+- Forgetting to assign back to `df` (so changes are not saved)  
+- Misspelling column names in the rename dictionary  
+- Assuming renaming changes data instead of just labels  
+- Not verifying changes using `df.columns`  
+
+---
+
+## 💡 Tip
+
+Always print `df.columns` after renaming to confirm everything was updated correctly.
+
+</details>
+## 1.10. List Unique Categories
 ```python
 # 1. See all unique categories inside the 'Sex' column
 print(df["Sex"].unique())
