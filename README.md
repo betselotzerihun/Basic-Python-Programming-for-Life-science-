@@ -949,39 +949,195 @@ Using a legend instead of slice labels makes pie charts **much cleaner and publi
 </details>
 ---
 
-# 🌍 7. REGION vs CULTURE RESULT (HEATMAP)
+# 7 REGION vs CULTURE RESULT (HEATMAP OPTIONS)
+Option A: Percentages by Region (Row-Wise Proportions)If one region has 100 patients and another has only 5, comparing raw numbers can be misleading. This code converts the data into percentages along each row ($100\%$ per region) so you can compare ratios fairly.
 
 ```python
-cross = pd.crosstab(df["region"], df["CultureResult"])
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
 
-sns.heatmap(cross, annot=True, cmap="Reds")
+# 1. Clean invisible trailing spaces from text values first
+df["region"] = df["region"].str.strip()
+df["CultureResult"] = df["CultureResult"].str.strip()
 
-plt.title("Region vs TB Outcome")
+# 2. Create the crosstab but add normalize="index" to calculate row percentages
+cross_pct = pd.crosstab(df["region"], df["CultureResult"], normalize="index") * 100
+
+# 3. Plot using a modern Yellow-Green-Blue (YlGnBu) palette and format numbers with 1 decimal (.1f)
+sns.heatmap(cross_pct, annot=True, cmap="YlGnBu", fmt=".1f")
+
+plt.title("Percentage of Culture Results within Each Region")
+plt.xlabel("Culture Result")
+plt.ylabel("Region")
 
 plt.show()
 ```
 
 <details>
-<summary>📘 Explanation + Common Mistakes</summary>
 
-## What this does
+<summary>🌡️ Heatmap with Percentages — What this does</summary>
 
-- Compares TB positivity across regions  
-- Shows patterns in disease distribution  
+## 📘 What this does
+
+- `df["region"].str.strip()` → removes hidden spaces from region names  
+- `df["CultureResult"].str.strip()` → removes hidden spaces from culture result values  
+- `pd.crosstab(df["region"], df["CultureResult"], normalize="index")`  
+  → creates a table comparing regions against culture results  
+  → `normalize="index"` converts counts into row percentages  
+- `* 100` → converts proportions into percentage values  
+- `sns.heatmap(...)` → visualizes the table as a heatmap  
+- `annot=True` → writes the numeric values inside each heatmap box  
+- `cmap="YlGnBu"` → applies a Yellow-Green-Blue color palette  
+- `fmt=".1f"` → formats displayed numbers with 1 decimal place  
+- `plt.title()` → adds a chart title  
+- `plt.xlabel()` → labels the X-axis (Culture Result)  
+- `plt.ylabel()` → labels the Y-axis (Region)  
+- `plt.show()` → displays the final heatmap  
 
 ---
 
 ## ❌ Common mistakes beginners make
 
-- Wrong column names  
-- Missing values breaking crosstab  
-- Too many regions making heatmap crowded  
+- Forgetting to clean hidden spaces before analysis  
+- Misunderstanding `normalize="index"` percentages  
+- Forgetting `* 100`, resulting in decimal proportions instead of percentages  
+- Using too many categories, making the heatmap crowded  
+- Confusing rows and columns in `pd.crosstab()`  
 
 ---
 
 ## 💡 Tip
 
-Keep categories limited for teaching.
+Heatmaps are excellent for spotting **patterns and trends across groups**, especially in epidemiology and genomics datasets.
+
+</details>
+
+
+🔠 Option B: Sorted Raw Counts (Highest to Lowest Concentration)
+By default, the heatmap lists categories alphabetically. This option sorts the regions based on total volume, placing the busiest regions at the very top of your matrix grid.
+
+```python
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# 1. Generate the base cross table counts
+cross = pd.crosstab(df["region"], df["CultureResult"])
+
+# 2. Sort the table rows based on which region has the highest number of Positive results
+cross_sorted = cross.sort_values(by="Positive", ascending=False)
+
+# 3. Draw the heatmap with crisp whole numbers (fmt="d") and an orange/red color scheme
+sns.heatmap(cross_sorted, annot=True, cmap="OrRd", fmt="d", linewidths=1, linecolor="white")
+
+plt.title("Sorted Grid: Region vs TB Outcome Concentration")
+plt.xlabel("Culture Result")
+plt.ylabel("Region (Sorted Highest to Lowest)")
+
+plt.show()
+```
+
+<details>
+
+<summary>🌡️ Sorted Heatmap — What this does</summary>
+
+## 📘 What this does
+
+- `pd.crosstab(df["region"], df["CultureResult"])`  
+  → creates a table counting TB culture results within each region  
+
+- `cross.sort_values(by="Positive", ascending=False)`  
+  → sorts regions from highest to lowest number of positive TB cases  
+
+- `sns.heatmap(...)` → visualizes the table as a heatmap  
+- `annot=True` → displays the actual count values inside each box  
+- `cmap="OrRd"` → applies an Orange-Red color palette  
+- `fmt="d"` → formats numbers as whole integers  
+- `linewidths=1` → adds spacing lines between boxes  
+- `linecolor="white"` → colors the separating lines white for a cleaner appearance  
+
+- `plt.title()` → adds a title to the heatmap  
+- `plt.xlabel()` → labels the X-axis (Culture Result categories)  
+- `plt.ylabel()` → labels the Y-axis (sorted regions)  
+- `plt.show()` → displays the final heatmap  
+
+---
+
+## ❌ Common mistakes beginners make
+
+- Sorting using a column name that does not exist (`"Positive"` spelling mismatch)  
+- Confusing raw counts with percentages  
+- Forgetting `fmt="d"` and getting decimal numbers for integer counts  
+- Using too many regions, making the heatmap difficult to read  
+- Misunderstanding which axis represents rows vs columns  
+
+---
+
+## 💡 Tip
+
+Sorting heatmaps helps important patterns stand out immediately, especially when comparing disease burden across regions.
+
+</details>
+
+
+
+Option C: The Total Grid Dataset Percentage (Grand Total Share)
+Instead of looking at rows or columns individually, this configuration shows what percentage of the entire patient registry falls into each block.
+
+```python
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# 1. Use normalize="all" to compute cell value over total dataset size
+cross_total_pct = pd.crosstab(df["region"], df["CultureResult"], normalize="all") * 100
+
+# 2. Draw the heatmap with a Cool-Warm theme (coolwarm)
+sns.heatmap(cross_total_pct, annot=True, cmap="coolwarm", fmt=".1f")
+
+plt.title("Share of Total Dataset Contribution (%)")
+plt.xlabel("Culture Result")
+plt.ylabel("Region")
+
+plt.show()
+```
+<details>
+
+<summary>🌡️ Percentage Heatmap — Total Dataset Contribution</summary>
+
+## 📘 What this does
+
+- `pd.crosstab(df["region"], df["CultureResult"], normalize="all")`  
+  → creates a cross table and calculates each cell as a proportion of the entire dataset  
+
+- `* 100` → converts proportions into percentage values  
+
+- `sns.heatmap(...)` → visualizes the percentages as a heatmap  
+- `annot=True` → displays percentage values inside each cell  
+- `cmap="coolwarm"` → applies a blue-to-red color palette  
+- `fmt=".1f"` → formats displayed numbers with 1 decimal place  
+
+- `plt.title()` → adds a title to the heatmap  
+- `plt.xlabel()` → labels the X-axis (Culture Result categories)  
+- `plt.ylabel()` → labels the Y-axis (Region names)  
+- `plt.show()` → displays the final heatmap  
+
+---
+
+## ❌ Common mistakes beginners make
+
+- Confusing `normalize="all"` with `normalize="index"`  
+- Forgetting `* 100`, resulting in decimal proportions instead of percentages  
+- Misinterpreting colors without checking actual values  
+- Overcrowding heatmaps with too many categories  
+- Using inconsistent category labels (`Positive` vs `positive`)  
+
+---
+
+## 💡 Tip
+
+`normalize="all"` is useful when you want to understand how much each group contributes to the entire dataset overall.
 
 </details>
 
